@@ -1,0 +1,15 @@
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /v1/.*
+  script: main.app
+
+
+libraries:
+- name: webapp2
+  version: latest
+
+skip_files:
+- ^(storage)/.*
