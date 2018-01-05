@@ -6,6 +6,9 @@ handlers:
 - url: /v1/.*
   script: main.app
 
+- url: /_tasks/.*
+  script: main.app
+
 
 libraries:
 - name: webapp2

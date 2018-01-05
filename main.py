@@ -1,8 +1,10 @@
 import webapp2
 import json
-import logging
 
-VERSION = '0.0.1'
+
+from handlers import task_handler
+
+VERSION = '0.0.3'
 
 
 class BaseHandler(webapp2.RequestHandler):
@@ -23,6 +25,6 @@ routes = [
                  handler_method='healthz',
                  methods=['GET'])
 
-         ]
+         ] + task_handler.ROUTES
 
 app = webapp2.WSGIApplication(routes, debug=True)
