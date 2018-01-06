@@ -4,3 +4,4 @@
 main.pyc
 .idea/cryptograf-server.iml
 .idea/misc.xml
+*.pyc 
