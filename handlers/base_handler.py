@@ -2,6 +2,7 @@ import time
 import webapp2
 import json
 import utils
+from webapp2_extras import sessions
 
 STATUS_ERROR = 400
 STATUS_OK = 200
@@ -11,6 +12,30 @@ class BaseHandler(webapp2.RequestHandler):
   """Base class for request handlers."""
   CONTENT_JSON = 'application/json'
   CONTENT_TEXT = 'text/plain'
+
+  @webapp2.cached_property
+  def user_model(self):
+    """Returns the implementation of the user model.
+
+    It is consistent with config['webapp2_extras.auth']['user_model'], if set.
+    """
+    return self.auth.store.user_model
+
+  def dispatch(self):
+    # Get a session store for this request.
+    self.session_store = sessions.get_store(request=self.request)
+    try:
+      # Dispatch the request.
+      webapp2.RequestHandler.dispatch(self)
+    finally:
+      # Save all sessions.
+      # print self.response
+      self.session_store.save_sessions(self.response)
+
+  @webapp2.cached_property
+  def session(self):
+        """Shortcut to access the current session."""
+        return self.session_store.get_session(backend="securecookie")
 
   def _get_response(self, content_type=CONTENT_JSON):
     self.response.headers.add_header('Access-Control-Allow-Origin', '*')
@@ -52,7 +77,6 @@ class BaseHandler(webapp2.RequestHandler):
     return int(time.time() * 1000)
 
   def success_response(self, data=None):
-    print data
     if data:
       self.write_response({'status': 'success', 'data': data})
     else:

@@ -1,30 +1,32 @@
+"""Entry point for the web app."""
+
 import webapp2
-import json
 
-
+from models import cryptograf as model
 from handlers import task_handler
+from handlers import user_handler
+from handlers import metrics_handler
 
 VERSION = '0.0.3'
 
+## Initialize application settings.
+model.Setting.init()
 
-class BaseHandler(webapp2.RequestHandler):
-  def write_response(self, data):
-    self.response.headers['Content-Type'] = 'application/json'
-    self.response.out.write(json.dumps(data))
+# Configuration values,
+# see https://webapp2.readthedocs.io/en/latest/guide/app.html#initialization
+APP_CONFIG = {
+  'webapp2_extras.sessions': {
+    'secret_key': model.Setting.get('auth_secret_key').encode('utf-8')
+  },
+  'webapp2_extras.auth': {
+    'user_model': 'models.cryptograf.User',
+    'user_attributes': ['email']
+  }
+}
 
+# Add all routes here.
+routes = metrics_handler.ROUTES + task_handler.ROUTES + user_handler.ROUTES
 
-class MetricsHandler(BaseHandler):
-  def healthz(self):
-    self.write_response({'status': 'up', 'version': VERSION})
-
-Route = webapp2.Route
-
-routes = [
-           Route(r'/v1/healthz',
-                 handler=MetricsHandler,
-                 handler_method='healthz',
-                 methods=['GET'])
-
-         ] + task_handler.ROUTES
-
-app = webapp2.WSGIApplication(routes, debug=True)
+app = webapp2.WSGIApplication(routes,
+                              config=APP_CONFIG,
+                              debug=True)
