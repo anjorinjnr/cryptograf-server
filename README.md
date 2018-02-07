@@ -36,3 +36,6 @@ http://docs.python-cerberus.org/en/stable/usage.html
 
 4. Python Style Guide
 https://google.github.io/styleguide/pyguide.html#Classes
+
+5. Mobile Client
+https://github.com/anjorinjnr/cryptograf
