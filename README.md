@@ -30,3 +30,9 @@ http://webapp2.readthedocs.io/en/latest/index.html
 
 2. GAE Python:
 https://cloud.google.com/appengine/docs/standard/python/
+
+3. Cerberus for Data Validation
+http://docs.python-cerberus.org/en/stable/usage.html
+
+4. Python Style Guide
+https://google.github.io/styleguide/pyguide.html#Classes
