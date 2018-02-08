@@ -3,12 +3,12 @@
 import webapp2
 
 from handlers.base_handler import BaseHandler
-from main import VERSION
+import main
 
 
 class MetricsHandler(BaseHandler):
   def healthz(self):
-    self.write_response({'status': 'up', 'version': VERSION})
+    self.write_response({'status': 'up', 'version': main.VERSION})
 
 
 ROUTES = [
