@@ -138,7 +138,9 @@ class Setting(ndb.Model):
       return data
     else:
       setting = cls.query(Setting.name == key).get()
-      return setting.value if setting else None
+      if setting:
+        memcache.add(setting.name, setting.value)
+        return setting.value
 
   @classmethod
   def add(cls, key, value):
