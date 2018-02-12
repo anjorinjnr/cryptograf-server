@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image: 'google/cloud-sdk:latest' }
+        docker { image 'google/cloud-sdk:latest' }
     }
     stages {
         stage('build') {
