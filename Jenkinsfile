@@ -5,7 +5,6 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                echo "Change Number ${env.CHANGE_ID}"
                 sh 'pip install -t lib -r requirements.txt'
             }
         }
