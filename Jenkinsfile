@@ -5,8 +5,21 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'git version'
+                sh 'pip install -t lib -r requirements.txt'
             }
         }
+        stage('test') {
+            steps {
+                sh 'python runner.py /usr/lib/google-cloud-sdk/platform/google_appengine'
+            }
+        }
+
+        stage('deploy to QA') {
+
+            steps {
+                echo currentBuild.result
+            }
+        }
+
     }
 }
