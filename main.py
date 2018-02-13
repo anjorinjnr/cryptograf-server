@@ -8,7 +8,7 @@ from handlers import task_handler
 from handlers import user_handler
 from handlers import metrics_handler
 
-VERSION = '0.0.4'
+VERSION = '0.0.5'
 
 
 def _IsDevEnv():
