@@ -29,7 +29,7 @@ class UserHandlerTest(TestCase):
     response = self.testapp.post('/v1/users', json.encode(user_data))
 
     # then
-    self.assertEqual(response.status_int, 400)
+    self.assertEqual(response.status_int, 200)
     self.assertEqual(user_data['email'], response.json_body['email'])
     self.assertIsNotNone(response.json_body['id'])
     self.assertIsNotNone(response.headers['Set-Cookie'])

@@ -8,7 +8,7 @@ from handlers import task_handler
 from handlers import user_handler
 from handlers import metrics_handler
 
-VERSION = '0.0.3'
+VERSION = '0.0.4'
 
 
 def _IsDevEnv():
@@ -55,6 +55,14 @@ APP_CONFIG = {
 routes = metrics_handler.ROUTES + task_handler.ROUTES + user_handler.ROUTES
 
 logging.info('Starting App...')
+
+
+def root(request, *args, **kwargs):
+  return webapp2.Response(
+    'Server: %s, Version: %s' % (os.environ['SERVER_NAME'], VERSION))
+
+
+routes.append((r'/', root))
 
 app = webapp2.WSGIApplication(routes, config=APP_CONFIG,
                               debug=_IsDevEnv() or _IsLocalEnv())
